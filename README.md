@@ -115,12 +115,6 @@ The project includes custom GLSL vertex and fragment shaders for:
 3. Shader modifications can be made in the `CoreWaveform` component
 4. Design tokens are defined in `index.css` and `tailwind.config.ts`
 
-## 🌐 Deployment
-
-### Lovable Platform (Recommended)
-1. Visit the [Lovable Project](https://lovable.dev/projects/7ea1ae27-2725-4688-b7b1-ebc838de2af5)
-2. Click Share → Publish
-3. Your app will be live with a custom URL
 
 ### Manual Deployment
 ```bash
@@ -158,14 +152,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - **shadcn/ui**: For beautiful, accessible UI components
 - **Lovable Platform**: For the development environment and hosting
 
-## 📞 Support
-
-- **Documentation**: [Lovable Docs](https://docs.lovable.dev/)
-- **Community**: [Lovable Discord](https://discord.com/channels/1119885301872070706/1280461670979993613)
-- **Issues**: Please use GitHub Issues for bug reports and feature requests
 
 ---
 
-**Experience the journey of consciousness through frequency and light.** ✨
-
-*Built with love using Lovable* 💜
+**Experience the journey of consciousness through frequency and light.**
