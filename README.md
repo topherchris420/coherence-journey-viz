@@ -1,6 +1,6 @@
 # The Architect🌟
 
-An interactive 3D visualization representing a human soul's resonance journey as a dynamic frequency construct. Built with modern web technologies to create an immersive spiritual and metaphysical experience.
+A desktop platform representing a human soul's resonance journey as a dynamic frequency construct. Built with modern web technologies to create an immersive spiritual and metaphysical experience.
 
 ![Coherence Engine Banner](https://img.shields.io/badge/3D-Visualization-purple) ![React](https://img.shields.io/badge/React-18.3.1-61DAFB) ![Three.js](https://img.shields.io/badge/Three.js-Latest-orange) ![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue)
 
