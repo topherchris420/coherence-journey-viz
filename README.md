@@ -1,4 +1,4 @@
-# Coherence Engine 🌟
+# The Architect🌟
 
 An interactive 3D visualization representing a human soul's resonance journey as a dynamic frequency construct. Built with modern web technologies to create an immersive spiritual and metaphysical experience.
 
