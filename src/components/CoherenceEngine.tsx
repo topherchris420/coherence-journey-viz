@@ -5,6 +5,8 @@ import * as THREE from 'three';
 import { Slider } from '@/components/ui/slider';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { Sidebar, SidebarProvider } from '@/components/ui/sidebar';
 
 interface CoherenceState {
   coreTone: number;
@@ -321,201 +323,213 @@ export const CoherenceEngine: React.FC = () => {
   });
 
   const [isPostDeath, setIsPostDeath] = useState(false);
+  const isMobile = useIsMobile();
 
   const updateState = (updates: Partial<CoherenceState>) => {
     setState(prev => ({ ...prev, ...updates }));
   };
 
-  return (
-    <div className="min-h-screen bg-gradient-oversoul relative overflow-hidden">
-      {/* Background Cosmic Effects */}
-      <div className="absolute inset-0 bg-gradient-cosmic animate-cosmic-spin opacity-30" />
-      
-      {/* Header */}
-      <header className="relative z-10 p-8 text-center space-y-4">
-        <div className="space-y-2">
-          <h1 className="text-display text-cosmic text-shimmer bg-gradient-soul bg-clip-text text-transparent animate-text-shimmer">
-            COHERENCE ENGINE
-          </h1>
-          <div className="h-px w-32 mx-auto bg-gradient-harmonic animate-glow-pulse" />
-        </div>
-        <p className="text-subheading text-foreground/70 animate-float-gentle">
-          Interactive Soul Resonance Visualization
-        </p>
-        <div className="flex justify-center gap-4 text-label text-primary/60">
-          <span className="animate-float-gentle" style={{ animationDelay: '0.5s' }}>
-            QUANTUM FREQUENCY
-          </span>
-          <span className="text-accent">•</span>
-          <span className="animate-float-gentle" style={{ animationDelay: '1s' }}>
-            ETHEREAL DYNAMICS
-          </span>
-          <span className="text-accent">•</span>
-          <span className="animate-float-gentle" style={{ animationDelay: '1.5s' }}>
-            SOUL RESONANCE
-          </span>
-        </div>
-      </header>
-
-      {/* Main Container */}
-      <div className="flex h-[calc(100vh-120px)] gap-6 px-6 pb-6">
-        
-        {/* Controls Panel */}
-        <Card className="w-80 p-6 bg-card/90 backdrop-blur-sm border-primary/20 shadow-resonance space-y-8">
-          <div className="space-y-2">
-            <h2 className="text-heading text-cosmic text-primary animate-glow-pulse">
-              RESONANCE CONTROLS
-            </h2>
-            <div className="h-px bg-gradient-harmonic opacity-60" />
-          </div>
-          
-          <div className="space-y-8">
-            {/* Core Tone */}
-            <div className="space-y-3">
-              <div className="flex justify-between items-center">
-                <label className="text-label text-primary-glow">
-                  CORE TONE FREQUENCY
-                </label>
-                <span className="text-body font-mono text-accent animate-glow-pulse">
-                  {state.coreTone.toFixed(1)} Hz
-                </span>
-              </div>
-              <Slider
-                value={[state.coreTone]}
-                onValueChange={([value]) => updateState({ coreTone: value })}
-                min={1}
-                max={10}
-                step={0.1}
-                className="w-full"
-              />
-            </div>
-
-            {/* Karma Load */}
-            <div className="space-y-3">
-              <div className="flex justify-between items-center">
-                <label className="text-label text-hell-glow">
-                  KARMA LOAD
-                </label>
-                <span className="text-body font-mono text-destructive animate-glow-pulse">
-                  {(state.karmaLoad * 100).toFixed(0)}%
-                </span>
-              </div>
-              <Slider
-                value={[state.karmaLoad]}
-                onValueChange={([value]) => updateState({ karmaLoad: value })}
-                min={0}
-                max={1}
-                step={0.01}
-                className="w-full"
-              />
-            </div>
-
-            {/* Coherence Level */}
-            <div className="space-y-3">
-              <div className="flex justify-between items-center">
-                <label className="text-label text-heaven-glow">
-                  COHERENCE LEVEL
-                </label>
-                <span className="text-body font-mono text-coherence-high animate-glow-pulse">
-                  {(state.coherenceLevel * 100).toFixed(0)}%
-                </span>
-              </div>
-              <Slider
-                value={[state.coherenceLevel]}
-                onValueChange={([value]) => updateState({ coherenceLevel: value })}
-                min={0}
-                max={1}
-                step={0.01}
-                className="w-full"
-              />
-            </div>
-
-            {/* Mirror Interactions */}
-            <div className="space-y-3">
-              <div className="flex justify-between items-center">
-                <label className="text-label text-reincarnation-glow">
-                  MIRROR INTERACTIONS
-                </label>
-                <span className="text-body font-mono text-reincarnation animate-glow-pulse">
-                  {(state.mirrorInteractions * 100).toFixed(0)}%
-                </span>
-              </div>
-              <Slider
-                value={[state.mirrorInteractions]}
-                onValueChange={([value]) => updateState({ mirrorInteractions: value })}
-                min={0}
-                max={1}
-                step={0.01}
-                className="w-full"
-              />
-            </div>
-
-            {/* Zone Selection */}
-            <div className="space-y-4">
-              <label className="text-label text-accent">FREQUENCY ZONE</label>
-              <div className="grid grid-cols-2 gap-3">
-                {(['heaven', 'hell', 'reincarnation', 'neutral'] as const).map((zone) => (
-                  <Button
-                    key={zone}
-                    variant={state.zone === zone ? "default" : "outline"}
-                    size="sm"
-                    onClick={() => updateState({ zone })}
-                    className="text-label font-cosmic transition-soul hover:animate-glow-pulse"
-                  >
-                    {zone.toUpperCase()}
-                  </Button>
-                ))}
-              </div>
-            </div>
-
-            {/* Post-Death Realignment */}
-            <div className="pt-6 border-t border-primary/20 space-y-3">
-              <label className="text-label text-destructive">SOUL TRANSITION</label>
-              <Button
-                variant={isPostDeath ? "destructive" : "secondary"}
-                onClick={() => setIsPostDeath(!isPostDeath)}
-                className="w-full text-label font-cosmic transition-soul animate-float-gentle"
-              >
-                {isPostDeath ? "◄ RETURN TO INCARNATION" : "► SIMULATE POST-DEATH"}
-              </Button>
-            </div>
-          </div>
-        </Card>
-
-        {/* 3D Visualization */}
-        <div className="flex-1 rounded-lg overflow-hidden border border-primary/20 shadow-ethereal">
-          <Canvas
-            camera={{ position: [0, 0, 15], fov: 60 }}
-            className="bg-gradient-oversoul"
-          >
-            <CoherenceScene state={state} />
-          </Canvas>
-        </div>
+  const Controls = () => (
+    <Card className="w-full md:w-80 p-6 bg-card/90 backdrop-blur-sm border-primary/20 shadow-resonance space-y-8">
+      <div className="space-y-2">
+        <h2 className="text-heading text-cosmic text-primary animate-glow-pulse">
+          RESONANCE CONTROLS
+        </h2>
+        <div className="h-px bg-gradient-harmonic opacity-60" />
       </div>
 
-      {/* Status Bar */}
-      <div className="absolute bottom-0 left-0 right-0 bg-card/90 backdrop-blur-sm border-t border-primary/20 p-6">
-        <div className="flex justify-between items-center">
-          <div className="flex items-center gap-2">
-            <span className="text-label text-muted-foreground">ZONE:</span>
-            <span className="text-body font-cosmic text-primary animate-glow-pulse">{state.zone.toUpperCase()}</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <span className="text-label text-muted-foreground">COHERENCE:</span>
-            <span className="text-body font-mono text-accent animate-glow-pulse">{(state.coherenceLevel * 100).toFixed(0)}%</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <span className="text-label text-muted-foreground">KARMA:</span>
-            <span className="text-body font-mono text-destructive animate-glow-pulse">{(state.karmaLoad * 100).toFixed(0)}%</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <span className="text-label text-muted-foreground">STATUS:</span>
-            <span className="text-body font-cosmic text-reincarnation animate-glow-pulse">
-              {isPostDeath ? "◆ POST-DEATH" : "◆ INCARNATE"}
+      <div className="space-y-8">
+        {/* Core Tone */}
+        <div className="space-y-3">
+          <div className="flex justify-between items-center">
+            <label className="text-label text-primary-glow">
+              CORE TONE FREQUENCY
+            </label>
+            <span className="text-body font-mono text-accent animate-glow-pulse">
+              {state.coreTone.toFixed(1)} Hz
             </span>
           </div>
+          <Slider
+            value={[state.coreTone]}
+            onValueChange={([value]) => updateState({ coreTone: value })}
+            min={1}
+            max={10}
+            step={0.1}
+            className="w-full"
+          />
+        </div>
+
+        {/* Karma Load */}
+        <div className="space-y-3">
+          <div className="flex justify-between items-center">
+            <label className="text-label text-hell-glow">
+              KARMA LOAD
+            </label>
+            <span className="text-body font-mono text-destructive animate-glow-pulse">
+              {(state.karmaLoad * 100).toFixed(0)}%
+            </span>
+          </div>
+          <Slider
+            value={[state.karmaLoad]}
+            onValueChange={([value]) => updateState({ karmaLoad: value })}
+            min={0}
+            max={1}
+            step={0.01}
+            className="w-full"
+          />
+        </div>
+
+        {/* Coherence Level */}
+        <div className="space-y-3">
+          <div className="flex justify-between items-center">
+            <label className="text-label text-heaven-glow">
+              COHERENCE LEVEL
+            </label>
+            <span className="text-body font-mono text-coherence-high animate-glow-pulse">
+              {(state.coherenceLevel * 100).toFixed(0)}%
+            </span>
+          </div>
+          <Slider
+            value={[state.coherenceLevel]}
+            onValueChange={([value]) => updateState({ coherenceLevel: value })}
+            min={0}
+            max={1}
+            step={0.01}
+            className="w-full"
+          />
+        </div>
+
+        {/* Mirror Interactions */}
+        <div className="space-y-3">
+          <div className="flex justify-between items-center">
+            <label className="text-label text-reincarnation-glow">
+              MIRROR INTERACTIONS
+            </label>
+            <span className="text-body font-mono text-reincarnation animate-glow-pulse">
+              {(state.mirrorInteractions * 100).toFixed(0)}%
+            </span>
+          </div>
+          <Slider
+            value={[state.mirrorInteractions]}
+            onValueChange={([value]) => updateState({ mirrorInteractions: value })}
+            min={0}
+            max={1}
+            step={0.01}
+            className="w-full"
+          />
+        </div>
+
+        {/* Zone Selection */}
+        <div className="space-y-4">
+          <label className="text-label text-accent">FREQUENCY ZONE</label>
+          <div className="grid grid-cols-2 gap-3">
+            {(['heaven', 'hell', 'reincarnation', 'neutral'] as const).map((zone) => (
+              <Button
+                key={zone}
+                variant={state.zone === zone ? "default" : "outline"}
+                size="sm"
+                onClick={() => updateState({ zone })}
+                className="text-label font-cosmic transition-soul hover:animate-glow-pulse"
+              >
+                {zone.toUpperCase()}
+              </Button>
+            ))}
+          </div>
+        </div>
+
+        {/* Post-Death Realignment */}
+        <div className="pt-6 border-t border-primary/20 space-y-3">
+          <label className="text-label text-destructive">SOUL TRANSITION</label>
+          <Button
+            variant={isPostDeath ? "destructive" : "secondary"}
+            onClick={() => setIsPostDeath(!isPostDeath)}
+            className="w-full text-label font-cosmic transition-soul animate-float-gentle"
+          >
+            {isPostDeath ? "◄ RETURN TO INCARNATION" : "► SIMULATE POST-DEATH"}
+          </Button>
         </div>
       </div>
-    </div>
+    </Card>
+  );
+
+  return (
+    <SidebarProvider>
+      <div className="min-h-screen bg-gradient-oversoul relative overflow-hidden">
+        {/* Background Cosmic Effects */}
+        <div className="absolute inset-0 bg-gradient-cosmic animate-cosmic-spin opacity-30" />
+
+        {/* Header */}
+        <header className="relative z-10 p-8 text-center space-y-4">
+          <div className="space-y-2">
+            <h1 className="text-display text-cosmic text-shimmer bg-gradient-soul bg-clip-text text-transparent animate-text-shimmer">
+              COHERENCE ENGINE
+            </h1>
+            <div className="h-px w-32 mx-auto bg-gradient-harmonic animate-glow-pulse" />
+          </div>
+          <p className="text-subheading text-foreground/70 animate-float-gentle">
+            Interactive Soul Resonance Visualization
+          </p>
+          <div className="flex justify-center gap-4 text-label text-primary/60">
+            <span className="animate-float-gentle" style={{ animationDelay: '0.5s' }}>
+              QUANTUM FREQUENCY
+            </span>
+            <span className="text-accent">•</span>
+            <span className="animate-float-gentle" style={{ animationDelay: '1s' }}>
+              ETHEREAL DYNAMICS
+            </span>
+            <span className="text-accent">•</span>
+            <span className="animate-float-gentle" style={{ animationDelay: '1.5s' }}>
+              SOUL RESONANCE
+            </span>
+          </div>
+        </header>
+
+        {/* Main Container */}
+        <main className="flex flex-col md:flex-row h-auto md:h-[calc(100vh-220px)] gap-6 px-6 pb-6">
+          {/* Controls Panel */}
+          {isMobile ? (
+            <Sidebar>
+              <Controls />
+            </Sidebar>
+          ) : (
+            <Controls />
+          )}
+
+          {/* 3D Visualization */}
+          <div className="h-[50vh] md:h-full md:flex-1 rounded-lg overflow-hidden border border-primary/20 shadow-ethereal">
+            <Canvas
+              camera={{ position: [0, 0, 15], fov: 60 }}
+              className="bg-gradient-oversoul"
+            >
+              <CoherenceScene state={state} />
+            </Canvas>
+          </div>
+        </main>
+
+        {/* Status Bar */}
+        <div className="absolute bottom-0 left-0 right-0 bg-card/90 backdrop-blur-sm border-t border-primary/20 p-6">
+          <div className="flex justify-between items-center">
+            <div className="flex items-center gap-2">
+              <span className="text-label text-muted-foreground">ZONE:</span>
+              <span className="text-body font-cosmic text-primary animate-glow-pulse">{state.zone.toUpperCase()}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="text-label text-muted-foreground">COHERENCE:</span>
+              <span className="text-body font-mono text-accent animate-glow-pulse">{(state.coherenceLevel * 100).toFixed(0)}%</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="text-label text-muted-foreground">KARMA:</span>
+              <span className="text-body font-mono text-destructive animate-glow-pulse">{(state.karmaLoad * 100).toFixed(0)}%</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="text-label text-muted-foreground">STATUS:</span>
+              <span className="text-body font-cosmic text-reincarnation animate-glow-pulse">
+                {isPostDeath ? "◆ POST-DEATH" : "◆ INCARNATE"}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </SidebarProvider>
   );
 };
