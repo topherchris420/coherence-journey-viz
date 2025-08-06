@@ -199,7 +199,9 @@ const SpectralField: React.FC<{ state: CoherenceState }> = ({ state }) => {
       <bufferGeometry>
         <bufferAttribute
           attach="attributes-position"
-          args={[positions, 3]}
+          count={particleCount}
+          array={positions}
+          itemSize={3}
         />
       </bufferGeometry>
       <pointsMaterial
